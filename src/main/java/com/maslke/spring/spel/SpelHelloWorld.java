@@ -42,6 +42,12 @@ public class SpelHelloWorld {
         String userName = expressionParser.parseExpression("name").getValue(context, String.class);
         System.out.println(userName);
 
+        //method invoke
+        System.out.println(expressionParser.parseExpression("say()").getValue(context, String.class));
+        // boolean expression
+        Boolean result = expressionParser.parseExpression("credits < 200000").getValue(context, Boolean.class);
+        System.out.println("credits < 20000:" + result);
+
         expressionParser.parseExpression("name").setValue(context, "feng");
         String name = expressionParser.parseExpression("name").getValue(context, String.class);
         System.out.println(name);

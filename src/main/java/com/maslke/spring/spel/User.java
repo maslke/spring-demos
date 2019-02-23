@@ -50,4 +50,8 @@ public class User {
     public void setGender(boolean gender) {
         this.gender = gender;
     }
+
+    public String say() {
+        return String.format("name:%s, credits:%s", name, credits);
+    }
 }
