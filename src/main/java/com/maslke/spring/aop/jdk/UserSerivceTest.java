@@ -1,4 +1,4 @@
-package com.maslke.spring.aop;
+package com.maslke.spring.aop.jdk;
 
 import java.lang.reflect.Proxy;
 
