@@ -31,6 +31,11 @@ public class SpelHelloWorld {
         expression = expressionParser.parseExpression("'Hello'.bytes.length");
         System.out.println(expression.getValue(Integer.class));
 
+        System.out.println(expressionParser.parseExpression("'Hello'.length()").getValue(Integer.class));
+
+        System.out.println("int class:" + expressionParser.parseExpression("T(int).toString()").getValue(String.class));
+
+
         User user = new User("maslke", 10000);
         user.getHobbies().add("Football");
         EvaluationContext context = new StandardEvaluationContext(user);
