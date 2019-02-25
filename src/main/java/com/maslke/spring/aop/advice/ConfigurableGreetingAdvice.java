@@ -4,7 +4,7 @@ import org.aopalliance.intercept.MethodInvocation;
 import org.springframework.aop.support.DelegatingIntroductionInterceptor;
 
 public class ConfigurableGreetingAdvice extends DelegatingIntroductionInterceptor implements Configurable {
-    private ThreadLocal<Boolean> statusMap = new ThreadLocal<>();
+    private ThreadLocal<Boolean> statusMap = new ThreadLocal<Boolean>();
 
     @Override
     public Object invoke(MethodInvocation mi) throws Throwable {
