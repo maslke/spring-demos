@@ -1,11 +1,14 @@
-package com.maslke.spring.aop.advisor.flowmethocmatcher;
+package com.maslke.spring.aop.advisor.composeadvisor;
 
 import com.maslke.spring.aop.advice.GreetingBeforeAdvice;
 import com.maslke.spring.aop.advisor.Waiter2;
 import com.maslke.spring.aop.advisor.WaiterDelegate;
+import org.springframework.aop.Pointcut;
 import org.springframework.aop.framework.ProxyFactory;
+import org.springframework.aop.support.ComposablePointcut;
 import org.springframework.aop.support.ControlFlowPointcut;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
+import org.springframework.aop.support.NameMatchMethodPointcut;
 import org.testng.annotations.Test;
 
 /**
@@ -14,15 +17,21 @@ import org.testng.annotations.Test;
  * @version:0.0.1
  */
 @Test
-public class FlowGreetingAdvisorTest {
+public class ComposeAdvisorTest {
     @Test
     public void advisorTest() {
 
         DefaultPointcutAdvisor advisor = new DefaultPointcutAdvisor();
         GreetingBeforeAdvice advice = new GreetingBeforeAdvice();
-        ControlFlowPointcut pointcut = new ControlFlowPointcut(WaiterDelegate.class, "service");
+        Pointcut pointcut = new ControlFlowPointcut(WaiterDelegate.class, "service");
+        Pointcut pointcut1 = new NameMatchMethodPointcut();
+        ((NameMatchMethodPointcut) pointcut1).addMethodName("greetTo");
+
+        ComposablePointcut composablePointcut = new ComposablePointcut();
+        composablePointcut.intersection(pointcut).intersection(pointcut1);
+
         advisor.setAdvice(advice);
-        advisor.setPointcut(pointcut);
+        advisor.setPointcut(composablePointcut);
 
         Waiter2 waiterTarget = new Waiter2();
         ProxyFactory proxyFactory = new ProxyFactory();
@@ -41,3 +50,4 @@ public class FlowGreetingAdvisorTest {
 
     }
 }
+
