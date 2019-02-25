@@ -8,4 +8,8 @@ public class Waiter2 {
     public void serveTo(String name) {
         System.out.println("waiter serve to " + name + "...");
     }
+
+    public void greetAgain(String name) {
+        System.out.println("waiter greet again to " + name + "...");
+    }
 }
