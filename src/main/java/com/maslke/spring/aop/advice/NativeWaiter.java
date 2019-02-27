@@ -10,4 +10,9 @@ public class NativeWaiter implements Waiter {
     public void serveTo(String clientName) {
         System.out.println("serve to " + clientName + "..");
     }
+
+    public void greetTo(Integer value) {
+        System.out.println("the value is :" + value);
+    }
+
 }
