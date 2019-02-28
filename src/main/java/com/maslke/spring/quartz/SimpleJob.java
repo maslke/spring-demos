@@ -12,6 +12,6 @@ import org.quartz.JobExecutionException;
  */
 public class SimpleJob implements  Job{
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        System.out.println(context.getTrigger().getName()+ " triggered. time is :" + new Date());
+        System.out.println(" triggered. time is :" + new Date());
     }
 }

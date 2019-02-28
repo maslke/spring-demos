@@ -1,10 +1,14 @@
 package com.maslke.spring.quartz;
 
+import org.quartz.CronScheduleBuilder;
 import org.quartz.JobDetail;
+import org.quartz.ScheduleBuilder;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerFactory;
-import org.quartz.Trigger;
+import org.quartz.TriggerBuilder;
+import org.quartz.impl.JobDetailImpl;
 import org.quartz.impl.StdSchedulerFactory;
+import org.quartz.impl.triggers.CronTriggerImpl;
 
 /**
  * @author:maslke
@@ -13,10 +17,12 @@ import org.quartz.impl.StdSchedulerFactory;
  */
 public class CronTrigger {
     public static void main(String[] args) throws Exception {
-        JobDetail jobDetail = new JobDetail("job1", "j_group", SimpleJob.class);
+        JobDetail jobDetail = new JobDetailImpl("job1", "j_group", SimpleJob.class);
 
-        Trigger trigger = new org.quartz.CronTrigger("trigger1", "t_group");
-        ((org.quartz.CronTrigger) trigger).setCronExpression("0/5 * * * * ?");
+        //TriggerBuilder.newTrigger().withIdentity("trigger1", "t_group").withSchedule(CronScheduleBuilder
+        // .cronSchedule("0/5 * * * * *")).build();
+        CronTriggerImpl trigger = new CronTriggerImpl("trigger1", "t_group");
+        trigger.setCronExpression("0/5 * * * * ?");
 
         SchedulerFactory schedulerFactory = new StdSchedulerFactory();
         Scheduler scheduler = schedulerFactory.getScheduler();

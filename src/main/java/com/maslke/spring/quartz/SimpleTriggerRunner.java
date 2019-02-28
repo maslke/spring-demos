@@ -1,11 +1,17 @@
 package com.maslke.spring.quartz;
 
 import java.util.Date;
+import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
+import org.quartz.JobKey;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerFactory;
 import org.quartz.SimpleTrigger;
+import org.quartz.core.jmx.JobDetailSupport;
+import org.quartz.impl.JobDetailImpl;
 import org.quartz.impl.StdSchedulerFactory;
+import org.quartz.impl.triggers.SimpleTriggerImpl;
+import org.springframework.scheduling.quartz.JobDetailFactoryBean;
 
 /**
  * @author:maslke
@@ -15,9 +21,11 @@ import org.quartz.impl.StdSchedulerFactory;
 public class SimpleTriggerRunner {
 
     public static void  main(String[] args) throws Exception {
-        JobDetail jobDetail = new JobDetail("job1", "group1", SimpleJob.class);
+        //JobKey jobKey = new JobKey("job1", "group1");
+        //JobDetail jobDetail = JobBuilder.newJob(SimpleJob.class).withIdentity("job1", "group1").build();
+        JobDetail jobDetail = new JobDetailImpl("job1", "group1", SimpleJob.class);
 
-        SimpleTrigger trigger = new SimpleTrigger("trigger1", "t_group1");
+        SimpleTriggerImpl trigger = new SimpleTriggerImpl("trigger1", "t_group1");
         trigger.setStartTime(new Date());
         trigger.setRepeatInterval(2000);
         trigger.setRepeatCount(100);
