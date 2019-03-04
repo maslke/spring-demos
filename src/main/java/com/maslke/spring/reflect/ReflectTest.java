@@ -10,6 +10,23 @@ import java.lang.reflect.Method;
  */
 public class ReflectTest {
 
+    public static void displayClassInfos(String classFullName) throws Exception {
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        Class clazz = classLoader.loadClass(classFullName);
+        Method[] methods = clazz.getMethods();
+        for (Method method : methods) {
+            System.out.println("method name: " + method.getName());
+            Class[] classes = method.getParameterTypes();
+            System.out.println("params type:");
+            for (Class c : classes) {
+                System.out.println(c.getCanonicalName());
+            }
+            System.out.println("return type:" + method.getReturnType().getCanonicalName());
+
+        }
+
+    }
+
     public static Car initByDefaultContructor() throws Exception {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         Class clazz = classLoader.loadClass("com.maslke.spring.reflect.Car");
@@ -49,5 +66,7 @@ public class ReflectTest {
 
         Car car2 = initByParamsConstructor();
         car2.introduce();
+
+        displayClassInfos("com.maslke.spring.reflect.Car");
     }
 }
