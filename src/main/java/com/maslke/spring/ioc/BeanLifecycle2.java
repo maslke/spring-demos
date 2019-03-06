@@ -2,7 +2,7 @@ package com.maslke.spring.ioc;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-public class BeanL ifecycle2 {
+public class BeanLifecycle2 {
 
     public static void main(String[] args) {
 
