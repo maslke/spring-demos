@@ -3,7 +3,7 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="car" class="com.maslke.spring.ioc.Car" destroy-method="myDestory" init-method="myInit">
+    <bean id="car" class="com.maslke.spring.ioc.Car" destroy-method="myDestory" init-method="myInit" scope="prototype">
         <property name="brand" value="Audi" />
         <property name="maxSpeed" value="100" />
     </bean>
@@ -11,5 +11,15 @@
     <bean class="com.maslke.spring.ioc.CarFactoryPostProcessor" />
     <bean class="com.maslke.spring.ioc.CarInstantiationAwarePostProcessor" />
     <bean class="com.maslke.spring.ioc.CarBeanPostProcessor" />
+
+    <bean id="magicBoss" class="com.maslke.spring.injection.MagicBoss">
+        <lookup-method name="getCar" bean="car" />
+    </bean>
+
+    <bean id="boss1" class="com.maslke.spring.injection.Boss1" >
+        <replaced-method name="getCar" replacer="boss2" />
+    </bean>
+    <bean id="boss2" class="com.maslke.spring.injection.Boss2" />
+
 
 </beans>
