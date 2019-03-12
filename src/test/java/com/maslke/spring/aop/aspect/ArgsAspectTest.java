@@ -1,11 +1,9 @@
 package com.maslke.spring.aop.aspect;
 
-import com.maslke.spring.aop.advice.NativeWaiter;
-import com.sun.org.apache.xpath.internal.Arg;
 import org.springframework.aop.aspectj.annotation.AspectJProxyFactory;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.*;
+import com.maslke.spring.aop.advice.NativeWaiter;
 
 /**
  * @author:maslke
