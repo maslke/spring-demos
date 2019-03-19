@@ -6,7 +6,9 @@
     <context:property-placeholder location="classpath:spring/hibernate/jdbc.properties" />
     <bean id="dataSource " class="org.apache.commons.dbcp.BasicDataSource"
           destroy-method="close" p:driverClassName="${jdbc.driverClassName}"
-          p:url="${jdbc.url}" p:username="${username}" p:password="${password}" />
-    <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean" p:dataSource-ref="dataSource" />
-
+          p:url="${jdbc.url}" p:username="${jdbc.username}" p:password="${jdbc.password}" />
+    <bean class="org.springframework.orm.hibernate5.LocalSessionFactoryBean" id="sessionFactory">
+        <property name="dataSource" ref="dataSource "/>
+        <property name="mappingLocations" value="classpath*:com/maslke/spring/persistence/**/*.xml" />
+    </bean>
 </beans>
