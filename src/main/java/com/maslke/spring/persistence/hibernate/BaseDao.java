@@ -10,4 +10,8 @@ public class BaseDao {
     public HibernateTemplate getHibernateTemplate() {
         return this.hibernateTemplate;
     }
+
+    public void setHibernateTemplate(HibernateTemplate hibernateTemplate) {
+        this.hibernateTemplate = hibernateTemplate;
+    }
 }
