@@ -1,5 +1,8 @@
 package com.maslke.spring.ioc;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
@@ -42,21 +45,33 @@ public class Car implements BeanNameAware, BeanFactoryAware, InitializingBean, D
         this.beanName = s;
     }
 
+
+    @PostConstruct
+    public void annotationInit() {
+        System.out.println("0:postConstruct:...");
+    }
+
+    @PreDestroy
+    public void annotationDestroy() {
+        System.out.println("1: destroy");
+    }
+
+
     public void myInit() {
-        System.out.println("init-method: myinit");
+        System.out.println("2:init-method: myinit");
         this.maxSpeed = 250;
     }
 
     public void myDestory() {
-        System.out.println("destroy-method: myDestroy()");
+        System.out.println("2：destroy-method: myDestroy()");
     }
 
     public void destroy() throws Exception {
-        System.out.println("destroy: " + beanName);
+        System.out.println("3:destroy: " + beanName);
     }
 
     public void afterPropertiesSet() throws Exception {
-        System.out.println("init: " + beanName);
+        System.out.println("1:init: " + beanName);
     }
 
     public String getBrand() {
