@@ -1,7 +1,5 @@
 package com.maslke.spring.ioc;
 
-import org.springframework.beans.factory.ListableBeanFactory;
-import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class BeanLifecycle2 {

@@ -17,7 +17,6 @@ public class BeanLifecycle {
 
         beanFactory.addBeanPostProcessor(new CarBeanPostProcessor());
         beanFactory.addBeanPostProcessor(new CarInstantiationAwarePostProcessor());
-
         Car car = beanFactory.getBean("car", Car.class);
 
         car.introduce();
