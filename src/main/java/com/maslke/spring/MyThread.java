@@ -25,7 +25,7 @@ public class MyThread implements Runnable {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         MyThread myThread = new MyThread();
         Thread t1 = new Thread(myThread);
         Thread t2 = new Thread(myThread);
@@ -33,12 +33,9 @@ public class MyThread implements Runnable {
         t1.start();
         t2.start();
         t3.start();
-        try {
-            Thread.sleep(1000);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
+        t1.join();
+        t2.join();
+        t3.join();
         System.out.print(myThread.getCount());
     }
 }
