@@ -5,6 +5,7 @@ import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.Exchanger;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -95,6 +96,36 @@ public class ConcurrentTest {
         }.start();
         cyclicBarrier.await();
         System.out.println("3");
+    }
+
+    @Test
+    public void exchangerTest() throws InterruptedException {
+        final Exchanger<String> exchanger = new Exchanger<>();
+        new Thread() {
+            @Override
+            public void run() {
+                String a = "test";
+                try {
+                    exchanger.exchange(a);
+
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }.start();
+
+        new Thread() {
+            @Override
+            public void run() {
+                String b = "test";
+                try {
+                    String a = exchanger.exchange(b);
+                    System.out.println(a);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }.start();
     }
 
     public void cyclicBarrierTest2() {
