@@ -1,6 +1,7 @@
 package com.maslke.spring.lock;
 
 import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -30,9 +31,10 @@ public class Ticket2 implements Runnable {
 class TicketTest2 {
     public static void main(String[] args) {
         Ticket ticket = new Ticket(1000);
-        Executor executor = Executors.newFixedThreadPool(3);
+        ExecutorService executor = Executors.newFixedThreadPool(3);
         executor.execute(ticket);
         executor.execute(ticket);
         executor.execute(ticket);
+        executor.shutdown();
     }
 }

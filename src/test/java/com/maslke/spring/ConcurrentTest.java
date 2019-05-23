@@ -7,6 +7,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.Exchanger;
 import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import org.testng.annotations.Test;
@@ -130,7 +131,7 @@ public class ConcurrentTest {
 
     public void cyclicBarrierTest2() {
         final CyclicBarrier cyclicBarrier = new CyclicBarrier(5);
-        Executor executor = Executors.newFixedThreadPool(4);
+        ExecutorService executor = Executors.newFixedThreadPool(4);
         final ConcurrentHashMap<String, Integer> map = new ConcurrentHashMap<String, Integer>(16);
         for (int i = 0; i < 4; i++) {
             executor.execute(new Thread(){
@@ -156,5 +157,6 @@ public class ConcurrentTest {
             sum += sheet.getValue();
         }
         assertEquals(sum, 4);
+        executor.shutdown();
     }
 }

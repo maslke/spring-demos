@@ -2,6 +2,7 @@ package com.maslke.spring.juc;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
@@ -15,7 +16,7 @@ public class DeadLockDemo {
 
     public static void main(String[] args) {
         CountDownLatch latch = new CountDownLatch(2);
-        Executor executor = Executors.newFixedThreadPool(2);
+        ExecutorService executor = Executors.newFixedThreadPool(2);
         executor.execute(new Runnable() {
             @Override
             public void run() {
@@ -60,6 +61,7 @@ public class DeadLockDemo {
             Thread.currentThread().interrupt();
             System.out.println("dead lock");
         }
+        executor.shutdown();
 
     }
 }

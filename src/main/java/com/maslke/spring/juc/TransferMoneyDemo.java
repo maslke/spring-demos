@@ -3,6 +3,7 @@ package com.maslke.spring.juc;
 import java.util.Random;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class TransferMoneyDemo {
@@ -14,7 +15,7 @@ public class TransferMoneyDemo {
         }
         Random rnd = new Random();
         CountDownLatch latch = new CountDownLatch(100);
-        Executor executor = Executors.newFixedThreadPool(100);
+        ExecutorService executor = Executors.newFixedThreadPool(100);
         for (int i = 0; i < 100; i++) {
             executor.execute(new Runnable() {
                 @Override
@@ -30,6 +31,7 @@ public class TransferMoneyDemo {
         for (int i = 0; i < 10; i++) {
             System.out.println("Id: " + accounts[i].getId() + ":" + accounts[i].getBalance());
         }
+        executor.shutdown();
 
 
     }
