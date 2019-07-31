@@ -69,7 +69,7 @@ class Allocator {
                 wait();
             }
             catch (InterruptedException ex) {
-                System.out.println(ex);
+                System.out.println(ex.getMessage());
             }
         }
         locks.add(a);

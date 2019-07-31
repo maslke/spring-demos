@@ -1,5 +1,10 @@
 package com.maslke.spring.lock;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
 public class Ticket implements Runnable {
     private int number;
 
@@ -27,11 +32,10 @@ public class Ticket implements Runnable {
 class TicketTest {
     public static void main(String[] args) {
         Ticket ticket = new Ticket(1000);
-        Thread t1 = new Thread(ticket, "A");
-        Thread t2 = new Thread(ticket, "B");
-        Thread t3 = new Thread(ticket, "C");
-        t1.start();
-        t2.start();
-        t3.start();
+        ExecutorService executorService = new ThreadPoolExecutor(3, 3, 0, TimeUnit.MILLISECONDS, new LinkedBlockingDeque<>(3));
+        executorService.submit(ticket);
+        executorService.submit(ticket);
+        executorService.submit(ticket);
+        executorService.shutdown();
     }
 }

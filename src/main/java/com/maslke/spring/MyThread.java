@@ -1,41 +1,61 @@
 package com.maslke.spring;
 
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class MyThread implements Runnable {
-    private int count = 0;
-    private ReentrantLock lock = new ReentrantLock();
 
-    public int getCount() {
-        return this.count;
+
+    private AtomicInteger atomicCount = new AtomicInteger(0);
+    private int count = 0;
+
+    private int getCount() {
+        return this.atomicCount.get();
+    }
+
+    private static CountDownLatch countDownLatch = new CountDownLatch(3);
+
+    private MyThread() {
     }
 
     @Override
     public void run() {
-        lock.lock();
         try {
             for (int i = 1; i <= 100000; i++) {
+                atomicCount.incrementAndGet();
                 count++;
             }
         }
         catch (Exception ex) {
             ex.printStackTrace();
-        } finally {
-            lock.unlock();
         }
+        countDownLatch.countDown();
     }
 
     public static void main(String[] args) throws InterruptedException {
+        AtomicInteger atomcIndex = new AtomicInteger(0);
         MyThread myThread = new MyThread();
-        Thread t1 = new Thread(myThread);
-        Thread t2 = new Thread(myThread);
-        Thread t3 = new Thread(myThread);
-        t1.start();
-        t2.start();
-        t3.start();
-        t1.join();
-        t2.join();
-        t3.join();
+        ExecutorService executorService = new ThreadPoolExecutor(3, 3, 0,
+                TimeUnit.MILLISECONDS, new ArrayBlockingQueue<>(3), new ThreadFactory() {
+            @Override
+            public Thread newThread(Runnable r) {
+                Thread t = new Thread(r);
+                t.setName("Thread-" + atomcIndex.getAndIncrement());
+                return t;
+            }
+        });
+        executorService.execute(myThread);
+        executorService.execute(myThread);
+        executorService.execute(myThread);
+        countDownLatch.await();
         System.out.print(myThread.getCount());
+        System.out.println();
+        System.out.println(myThread.count);
+        executorService.shutdown();
     }
 }
