@@ -1,10 +1,8 @@
 package com.maslke.spring.juc;
 
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 演示了在单线程线程池中造成死锁的一种典型的情况
@@ -20,16 +18,25 @@ public class SingleThreadExecutorDeadLockDemo {
 
     public static void main(String[] args) {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
-        executorService.execute(() -> {
+        Future<Integer> f = executorService.submit(() -> {
             Future<Integer> future = executorService.submit(() -> {
                 return 3;
             });
             try {
-                System.out.println(future.get(3000, TimeUnit.MILLISECONDS));
-            } catch (Exception ex) {
+                return future.get();
+            }
+            catch (Exception ex) {
                 System.out.println(ex.getMessage());
             }
+            return -1;
         });
+        try {
+            System.out.println(f.get().toString());
+
+        }
+        catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
         executorService.shutdown();
     }
 }
