@@ -1,7 +1,5 @@
 package com.maslke.spring.ioc;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
@@ -43,17 +41,6 @@ public class Car implements BeanNameAware, BeanFactoryAware, InitializingBean, D
     public void setBeanName(String s) {
         System.out.println("setBeanName...");
         this.beanName = s;
-    }
-
-
-    @PostConstruct
-    public void annotationInit() {
-        System.out.println("0:postConstruct:...");
-    }
-
-    @PreDestroy
-    public void annotationDestroy() {
-        System.out.println("1: destroy");
     }
 
 

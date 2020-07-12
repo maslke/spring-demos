@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="user" class="com.maslke.spring.domain.User">
+        <property name="id" value="1"/>
+        <property name="name" value="maslke"/>
+    </bean>
+
+    <bean id="super" class="com.maslke.spring.domain.SuperUser" parent="user" primary="true">
+        <property name="email" value="maslke@outlook.com"/>
+    </bean>
+
+    <bean id="objectFactory" class="org.springframework.beans.factory.config.ObjectFactoryCreatingFactoryBean">
+        <property name="targetBeanName" value="user"/>
+    </bean>
+
+    <bean id="user2" class="com.maslke.spring.domain.User" factory-method="createUser">
+
+    </bean>
+
+    <bean id="user4" class="com.maslke.spring.ioc.factorybean.UserFactoryBean">
+        <property name="id" value="10086"/>
+        <property name="name" value="mobile"/>
+    </bean>
+
+    <bean id="userFactory" class="com.maslke.spring.domain.UserFactory"/>
+    <bean id="user3" factory-bean="userFactory" factory-method="createUser"/>
+
+    <bean id="waiterServiceLoader" class="org.springframework.beans.factory.serviceloader.ServiceLoaderFactoryBean">
+        <property name="serviceType" value="com.maslke.spring.aop.advice.Waiter" />
+    </bean>
+
+
+</beans>
