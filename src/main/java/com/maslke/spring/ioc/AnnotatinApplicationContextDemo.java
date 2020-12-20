@@ -1,9 +1,11 @@
 package com.maslke.spring.ioc;
 
 import com.maslke.spring.domain.User;
+import com.maslke.spring.es.EsDao;
 import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.ListableBeanFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
@@ -19,6 +21,7 @@ import java.util.Map;
 
 @Configuration
 public class AnnotatinApplicationContextDemo {
+
     public static void main(String[] args) {
         AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext();
         applicationContext.register(AnnotatinApplicationContextDemo.class);
@@ -41,6 +44,11 @@ public class AnnotatinApplicationContextDemo {
 
         applicationContext.refresh();
         lookupCollectionByType(applicationContext);
+
+        EsDao esDao = applicationContext.getBean(EsDao.class);
+        esDao.searchByState("IL");
+
+        AnnotatinApplicationContextDemo demo = new AnnotatinApplicationContextDemo();
     }
 
     private static void lookupCollectionByType(BeanFactory beanFactory) {
@@ -48,6 +56,11 @@ public class AnnotatinApplicationContextDemo {
             Map<String, User> map = ((ListableBeanFactory) beanFactory).getBeansOfType(User.class);
             System.out.println(map);
         }
+    }
+
+    @Bean("esDao")
+    public EsDao getEsDao() {
+        return new EsDao();
     }
 
     @Bean("user4")
