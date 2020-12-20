@@ -22,7 +22,7 @@ import java.util.Map;
 @Configuration
 public class AnnotatinApplicationContextDemo {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext();
         applicationContext.register(AnnotatinApplicationContextDemo.class);
 
@@ -47,8 +47,7 @@ public class AnnotatinApplicationContextDemo {
 
         EsDao esDao = applicationContext.getBean(EsDao.class);
         esDao.searchByState("IL");
-
-        AnnotatinApplicationContextDemo demo = new AnnotatinApplicationContextDemo();
+        esDao.searchAggr();
     }
 
     private static void lookupCollectionByType(BeanFactory beanFactory) {
